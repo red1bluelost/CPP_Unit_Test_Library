@@ -1,3 +1,6 @@
 testing_the_tester/
 *.swp
+*.exe
+*.o
+*.out
 
