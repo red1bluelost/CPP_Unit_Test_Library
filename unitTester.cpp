@@ -33,6 +33,7 @@ namespace r1bl {
 	}
 
 	void UnitTester::ExecuteUnitTest() {
+		printf("%s\n\n", unitTestTitle);
 		for(auto & it : checks) {
 			if(it->executeCheck()) {
 				++passCount;
