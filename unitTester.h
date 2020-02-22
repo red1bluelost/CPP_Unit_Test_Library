@@ -8,6 +8,7 @@
 
 #include <cstdio>
 #include <vector>
+#include <memory>
 
 namespace r1bl {
 	
@@ -26,43 +27,47 @@ namespace r1bl {
 
 		public:
 		class funcCheck {
-			//disable assignment operator and default constructor
+			//disable copy constructor, assignment operator, and default constructor
+			funcCheck( funcCheck & );
 			funcCheck operator = ( funcCheck & );
 			funcCheck();
+			const char * const description;
 
 			//item test class to be used in a vector
 			class itemTest {
-				const char * description;
+				const char * const description;
 				bool result;
-				//disable assignment operator and default constructor
+				//disable copy constructor, assignment operator, and default constructor
+				itemTest( itemTest & );
 				itemTest operator = ( itemTest & );
 				itemTest ();
 
 				public:
-				itemTest (const char * s, bool r) : description(s) , result(r) {};
+				itemTest (const char * s, bool r) : description(s) , result(r) {}
 				bool Result();
 
 			};
 
 			bool passState = true;
-			std::vector<itemTest> expects;
+			std::vector<std::unique_ptr<itemTest>> expects;
 
 
 			public:
-			void expect(const char *, bool);
+			void Expect(const char *, bool);
 			bool executeCheck();
+			funcCheck(const char *, void (funcCheck*) );
 
 		};
 
 		private:
-		std::vector<funcCheck> checks;
+		std::vector<std::unique_ptr<funcCheck>> checks;
 
 		public:
-		void FuncCheck(const char *, void (funcCheck*) );
+		void FunctionTest(const char *, void (funcCheck*) );
 
 	};
 	
-	
+	//Use this short hand when writing your own tests
 	typedef UnitTester::funcCheck* CheckPtr;
 }
 

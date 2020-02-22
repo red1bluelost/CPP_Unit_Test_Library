@@ -16,14 +16,22 @@ namespace r1bl {
 
 
 
-	void UnitTester::funcCheck::expect(const char * s, bool r) {
-		expects.push_back(itemTest(s,r));
+	void UnitTester::funcCheck::Expect(const char * s, bool r) {
+		expects.emplace_back(new itemTest(s,r));
 	}
 
 	bool UnitTester::funcCheck::executeCheck() {
-		for(auto it : expects) {
-			passState = it.Result() && passState;
+		for(auto & it : expects) {
+			passState = it->Result() && passState;
 		}
 		return passState;
+	}
+
+	UnitTester::funcCheck::funcCheck(const char * s, void test(funcCheck*) ) : description(s) {
+		test(this);
+	}
+
+	void UnitTester::FunctionTest(const char * s, void test(funcCheck*) ) {
+		checks.emplace_back(new funcCheck(s, test));
 	}
 }
