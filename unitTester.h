@@ -55,6 +55,7 @@ namespace r1bl {
 			public:
 			void Expect(const char *, bool);
 			bool executeCheck();
+			const char * Describe() {return description;}
 			funcCheck(const char *, void (funcCheck*) );
 
 		};
@@ -63,7 +64,9 @@ namespace r1bl {
 		std::vector<std::unique_ptr<funcCheck>> checks;
 
 		public:
+		UnitTester(const char * s) : unitTestTitle(s) {}
 		void FunctionTest(const char *, void (funcCheck*) );
+		void ExecuteUnitTest();
 
 	};
 	
