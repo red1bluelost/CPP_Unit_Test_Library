@@ -4,3 +4,5 @@ testing_the_tester/
 *.o
 *.out
 
+.idea/
+cmake-build-debug/
